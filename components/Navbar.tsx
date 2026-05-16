@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
 
 const NAV_LINKS = [
@@ -18,6 +18,8 @@ const WHATSAPP_NUMBER = "594694136273";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -42,6 +44,11 @@ export default function Navbar() {
             : "bg-ebg-black/80 backdrop-blur-md"
         }`}
       >
+        {/* Scroll progress bar */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-[2px] bg-ebg-yellow origin-left"
+          style={{ scaleX }}
+        />
         <div className="max-w-[1400px] mx-auto px-6 xl:px-10">
           <div className="flex items-center justify-between h-[70px]">
 
