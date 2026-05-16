@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MapPin, Shield, Zap, Users } from "lucide-react";
-import { EASE, EASE_OUT, VP, VP_TIGHT } from "@/lib/animations";
+import { EASE, VP, VP_TIGHT } from "@/lib/animations";
 
 const VALUES = [
   {
@@ -33,11 +33,9 @@ const HEADING_LINES = [
   { text: "L'AVENIR.", yellow: false },
 ];
 
-
 export default function AboutSection() {
   return (
     <section id="about" className="py-32 bg-ebg-dark border-t border-ebg-dark-3 relative overflow-hidden">
-      {/* Background watermark */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none overflow-hidden">
         <span className="font-bebas text-[22vw] leading-none text-white/[0.015] select-none tracking-widest">
           BTP
@@ -49,7 +47,6 @@ export default function AboutSection() {
 
           {/* Left: Text content */}
           <div>
-            {/* Label */}
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +57,6 @@ export default function AboutSection() {
               — À propos
             </motion.p>
 
-            {/* Line-by-line heading reveal */}
             <h2 className="font-bebas text-[clamp(2.8rem,6vw,5rem)] leading-none tracking-wide mb-10">
               {HEADING_LINES.map((line, i) => (
                 <div key={i} className="overflow-hidden">
@@ -77,7 +73,6 @@ export default function AboutSection() {
               ))}
             </h2>
 
-            {/* Body text */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -99,7 +94,6 @@ export default function AboutSection() {
               </p>
             </motion.div>
 
-            {/* Values cards */}
             <div className="grid grid-cols-2 gap-3">
               {VALUES.map((value, i) => (
                 <motion.div
@@ -145,9 +139,8 @@ export default function AboutSection() {
 function AboutCard() {
   return (
     <div className="relative">
-      {/* Main card */}
       <div className="relative bg-ebg-black border border-ebg-dark-3 p-10 overflow-hidden">
-        {/* Yellow top accent — animates in */}
+        {/* scaleX 0→1 on scroll entrance matches the yellow accent pattern used elsewhere */}
         <motion.div
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
@@ -156,11 +149,9 @@ function AboutCard() {
           className="absolute top-0 left-0 w-20 h-[3px] bg-ebg-yellow origin-left"
         />
 
-        {/* Subtle bg grid */}
         <div className="absolute inset-0 bg-line-grid opacity-60" />
 
         <div className="relative space-y-8">
-          {/* Location header */}
           <div className="flex items-center gap-4">
             <div className="w-11 h-11 bg-ebg-yellow flex items-center justify-center shrink-0">
               <MapPin size={18} className="text-ebg-black" />
@@ -173,7 +164,6 @@ function AboutCard() {
 
           <div className="h-px bg-ebg-dark-3" />
 
-          {/* Key figures */}
           <div className="grid grid-cols-2 gap-6">
             <div>
               <div className="font-bebas text-5xl text-ebg-yellow leading-none">2024</div>
@@ -191,7 +181,6 @@ function AboutCard() {
 
           <div className="h-px bg-ebg-dark-3" />
 
-          {/* Vision */}
           <div>
             <p className="text-ebg-yellow text-[9px] tracking-[0.35em] uppercase font-semibold mb-3">
               Notre vision
@@ -203,28 +192,23 @@ function AboutCard() {
             </p>
           </div>
 
-          {/* Services pills */}
           <div className="flex flex-wrap gap-2">
-            {["Mini-pelles", "Terrassement", "Transport", "Maintenance"].map(
-              (tag) => (
-                <motion.span
-                  key={tag}
-                  whileHover={{ borderColor: "rgba(244,180,0,0.35)", color: "#9ca3af" }}
-                  transition={{ duration: 0.2 }}
-                  className="text-[9px] tracking-[0.18em] uppercase px-3 py-1.5 border border-ebg-dark-3 text-gray-600 cursor-default"
-                >
-                  {tag}
-                </motion.span>
-              )
-            )}
+            {["Mini-pelles", "Terrassement", "Transport", "Maintenance"].map((tag) => (
+              <motion.span
+                key={tag}
+                whileHover={{ borderColor: "rgba(244,180,0,0.35)", color: "#9ca3af" }}
+                transition={{ duration: 0.2 }}
+                className="text-[9px] tracking-[0.18em] uppercase px-3 py-1.5 border border-ebg-dark-3 text-gray-600 cursor-default"
+              >
+                {tag}
+              </motion.span>
+            ))}
           </div>
         </div>
 
-        {/* Corner accent */}
         <div className="absolute bottom-0 right-0 w-7 h-7 border-b-2 border-r-2 border-ebg-yellow/30" />
       </div>
 
-      {/* Shadow block */}
       <div className="absolute -bottom-3 -right-3 w-full h-full bg-ebg-yellow/[0.04] border border-ebg-yellow/10 -z-10" />
     </div>
   );

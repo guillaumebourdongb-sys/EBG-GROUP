@@ -6,15 +6,27 @@ import { EASE, VP } from "@/lib/animations";
 
 const STATS = [
   { Icon: CalendarCheck, value: "100%", label: "Disponible" },
-  { Icon: Users, value: "+", label: "Clients satisfaits" },
-  { Icon: MapPin, value: "Guyane", label: "Notre territoire" },
-  { Icon: Headphones, value: "7j/7", label: "À votre écoute" },
+  { Icon: Users,         value: "+",    label: "Clients satisfaits" },
+  { Icon: MapPin,        value: "Guyane", label: "Notre territoire" },
+  { Icon: Headphones,    value: "7j/7", label: "À votre écoute" },
 ];
+
+const statVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+const iconVariants = {
+  hidden: { rotate: -15, opacity: 0 },
+  visible: { rotate: 0, opacity: 1 },
+};
+const valueVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function PartnerStrip() {
   return (
     <section className="flex flex-col lg:flex-row min-h-[160px]">
-      {/* Yellow left block with diagonal cut */}
       <motion.div
         initial={{ opacity: 0, x: -40 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -37,36 +49,28 @@ export default function PartnerStrip() {
         </div>
       </motion.div>
 
-      {/* Dark right block with stats */}
       <div className="bg-ebg-dark flex-1 flex items-center px-6 xl:px-12">
         <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-6 py-8 lg:py-0">
           {STATS.map((stat, i) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              variants={statVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={VP}
               transition={{ delay: 0.2 + i * 0.09, duration: 0.55, ease: EASE }}
               className="flex items-center gap-3 group cursor-default"
             >
               <motion.div
-                initial={{ rotate: -15, opacity: 0 }}
-                whileInView={{ rotate: 0, opacity: 1 }}
-                viewport={VP}
+                variants={iconVariants}
                 transition={{ delay: 0.3 + i * 0.09, duration: 0.6, ease: EASE }}
                 whileHover={{ rotate: -8, scale: 1.1 }}
               >
-                <stat.Icon
-                  size={28}
-                  className="text-ebg-yellow shrink-0"
-                  strokeWidth={1.5}
-                />
+                <stat.Icon size={28} className="text-ebg-yellow shrink-0" strokeWidth={1.5} />
               </motion.div>
               <div>
                 <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={VP}
+                  variants={valueVariants}
                   transition={{ delay: 0.35 + i * 0.09, duration: 0.5 }}
                   className="font-bebas text-2xl xl:text-3xl text-white leading-none group-hover:text-ebg-yellow transition-colors duration-300"
                 >

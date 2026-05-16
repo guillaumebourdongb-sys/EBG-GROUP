@@ -34,17 +34,19 @@ const linkHover = {
   transition: { duration: 0.2 },
 };
 
+const contactLinkHover = {
+  color: "#ffffff",
+  transition: { duration: 0.2 },
+};
+
 export default function Footer() {
   return (
     <footer className="bg-ebg-dark border-t border-ebg-dark-3 relative overflow-hidden">
-      {/* Top gradient line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ebg-yellow/20 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Main grid */}
         <div className="py-16 grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
 
-          {/* Brand */}
           <motion.div
             custom={0}
             variants={columnVariants}
@@ -74,7 +76,6 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* Services */}
           <motion.div
             custom={1}
             variants={columnVariants}
@@ -100,7 +101,6 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Company */}
           <motion.div
             custom={2}
             variants={columnVariants}
@@ -126,7 +126,6 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Contact */}
           <motion.div
             custom={3}
             variants={columnVariants}
@@ -141,8 +140,7 @@ export default function Footer() {
               <li>
                 <motion.a
                   href="tel:+594694136273"
-                  whileHover={{ color: "#ffffff" }}
-                  transition={{ duration: 0.2 }}
+                  whileHover={contactLinkHover}
                   className="flex items-center gap-3 text-gray-500 text-[13px]"
                 >
                   <Phone size={13} className="text-ebg-yellow shrink-0" />
@@ -154,8 +152,7 @@ export default function Footer() {
                   href="https://wa.me/594694136273"
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ color: "#ffffff" }}
-                  transition={{ duration: 0.2 }}
+                  whileHover={contactLinkHover}
                   className="flex items-center gap-3 text-gray-500 text-[13px]"
                 >
                   <MessageCircle size={13} className="text-ebg-yellow shrink-0" />
@@ -165,8 +162,7 @@ export default function Footer() {
               <li>
                 <motion.a
                   href="mailto:contact@ebg-group.fr"
-                  whileHover={{ color: "#ffffff" }}
-                  transition={{ duration: 0.2 }}
+                  whileHover={contactLinkHover}
                   className="flex items-center gap-3 text-gray-500 text-[13px]"
                 >
                   <Mail size={13} className="text-ebg-yellow shrink-0" />
@@ -177,7 +173,6 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        {/* Bottom bar */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
