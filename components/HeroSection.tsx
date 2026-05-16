@@ -1,230 +1,121 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { PenLine, MessageCircle } from "lucide-react";
 
-const WHATSAPP_NUMBER = "594694000000";
+const WHATSAPP_NUMBER = "594694136273";
+const WHATSAPP_MESSAGE =
+  "Bonjour%20EBG%20GROUP,%20je%20souhaite%20un%20devis%20pour%20la%20location%20de%20mat%C3%A9riel.";
 
 const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.11, delayChildren: 0.5 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.3 },
   },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 50 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.85, ease: [0.25, 0.4, 0.25, 1] },
-  },
+  hidden: { opacity: 0, y: 36 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25, 0.4, 0.25, 1] } },
 };
 
 export default function HeroSection() {
   return (
     <section
       id="accueil"
-      className="relative min-h-screen flex items-center bg-ebg-black overflow-hidden"
+      className="relative min-h-screen bg-ebg-black overflow-hidden flex items-stretch"
     >
-      {/* Layered backgrounds */}
-      <div className="absolute inset-0 bg-dot-grid opacity-50" />
-      <div className="absolute inset-0 bg-gradient-to-br from-ebg-black via-ebg-black to-ebg-dark-2" />
-
-      {/* Yellow atmospheric glows */}
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-ebg-yellow/[0.04] blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/3 w-[300px] h-[300px] rounded-full bg-ebg-yellow/[0.03] blur-[100px] pointer-events-none" />
-
-      {/* Left yellow edge bar */}
-      <div className="absolute left-0 top-0 w-[3px] h-full bg-gradient-to-b from-transparent via-ebg-yellow to-transparent opacity-70" />
-
-      {/* Decorative large text watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        <span className="font-bebas text-[35vw] leading-none text-white/[0.015] select-none tracking-wider">
-          EBG
-        </span>
+      {/* ── RIGHT: Photo area ──────────────────────────────────────── */}
+      <div className="absolute inset-y-0 right-0 w-full lg:w-[62%]">
+        {/*
+          Photo placeholder — remplacer ce div par :
+          <Image src="/images/hero-excavator.jpg" alt="EBG GROUP mini-pelle en Guyane"
+                 fill className="object-cover object-center" priority />
+        */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(140deg, #1c0f00 0%, #3b1f00 25%, #6b3a00 45%, #4a2900 65%, #1a1000 85%, #0a0a0a 100%)",
+          }}
+        />
+        {/* Texture overlay */}
+        <div className="absolute inset-0 bg-stripe opacity-20" />
+        {/* Blended shadow toward left (dark section) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ebg-black via-ebg-black/75 lg:via-ebg-black/40 to-transparent" />
+        {/* Bottom vignette */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-ebg-black to-transparent" />
+        {/* Subtle yellow glow mid-right */}
+        <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-amber-500/[0.07] blur-[120px] pointer-events-none" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full pt-28 pb-24 lg:pt-32 lg:pb-32">
-        <div className="grid lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_500px] gap-12 xl:gap-20 items-center">
-
-          {/* Left: Main content */}
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="flex flex-col"
-          >
-            {/* Tag */}
-            <motion.div variants={item} className="mb-8">
-              <span className="inline-flex items-center gap-3 px-4 py-2 border border-ebg-yellow/25 text-ebg-yellow text-[10px] tracking-[0.35em] uppercase font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-ebg-yellow animate-pulse" />
-                Guyane Française &middot; BTP &middot; Construction
-              </span>
-            </motion.div>
-
-            {/* Headline */}
-            <motion.div variants={item}>
-              <h1 className="font-bebas text-[clamp(4.5rem,11vw,9.5rem)] leading-[0.88] tracking-wide text-white">
-                PUISSANCE
-              </h1>
-            </motion.div>
-            <motion.div variants={item} className="mb-7">
-              <h1 className="font-bebas text-[clamp(4.5rem,11vw,9.5rem)] leading-[0.88] tracking-wide text-ebg-yellow">
-                &amp;&nbsp;PRÉCISION.
-              </h1>
-            </motion.div>
-
-            {/* Yellow accent bar */}
-            <motion.div
-              variants={item}
-              className="w-20 h-[3px] bg-ebg-yellow mb-9"
-            />
-
-            {/* Description */}
-            <motion.p
-              variants={item}
-              className="text-gray-400 text-[1.05rem] leading-[1.75] max-w-[520px] mb-11"
-            >
-              Votre partenaire BTP de confiance en Guyane française.
-              Location de mini-pelles et matériel de chantier pour tous
-              vos projets — terrassement, excavation, construction.
-            </motion.p>
-
-            {/* CTA buttons */}
-            <motion.div variants={item} className="flex flex-wrap gap-4">
-              <a
-                href="#services"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-ebg-yellow text-ebg-black text-[11px] font-bold tracking-[0.22em] uppercase hover:bg-ebg-yellow-light transition-all duration-300"
-              >
-                Nos services
-                <ArrowRight
-                  size={15}
-                  className="group-hover:translate-x-1.5 transition-transform duration-300"
-                />
-              </a>
-              <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 px-8 py-4 border border-white/15 text-white text-[11px] font-medium tracking-[0.22em] uppercase hover:border-ebg-yellow/50 hover:text-ebg-yellow transition-all duration-300"
-              >
-                <MessageCircle size={15} />
-                WhatsApp
-              </a>
-            </motion.div>
-          </motion.div>
-
-          {/* Right: Premium visual card */}
-          <motion.div
-            initial={{ opacity: 0, x: 60, scale: 0.96 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 1.1, delay: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
-            className="hidden lg:block"
-          >
-            <HeroCard />
-          </motion.div>
-        </div>
-
-        {/* Scroll indicator */}
+      {/* ── LEFT: Content ──────────────────────────────────────────── */}
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 xl:px-10 flex items-center">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.8, duration: 0.8 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2.5 text-gray-600"
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="w-full lg:w-[52%] xl:w-[48%] py-36 flex flex-col"
         >
-          <span className="text-[9px] tracking-[0.4em] uppercase">Défiler</span>
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            className="w-px h-14 bg-gradient-to-b from-gray-600 to-transparent"
-          />
+          {/* Main logo headline */}
+          <motion.div variants={item} className="mb-3">
+            <h1 className="font-bebas leading-[0.87] tracking-[0.06em]">
+              <span className="block text-white" style={{ fontSize: "clamp(5.5rem, 13vw, 10.5rem)" }}>
+                EBG
+              </span>
+              <span className="block text-ebg-yellow" style={{ fontSize: "clamp(5.5rem, 13vw, 10.5rem)" }}>
+                GROUP
+              </span>
+            </h1>
+          </motion.div>
+
+          {/* Tagline */}
+          <motion.h2
+            variants={item}
+            className="font-sans font-black text-white uppercase leading-tight mb-3"
+            style={{ fontSize: "clamp(1rem, 2vw, 1.35rem)", letterSpacing: "0.04em" }}
+          >
+            Location de matériel<br />
+            &amp; solutions chantier<br />
+            en Guyane
+          </motion.h2>
+
+          {/* Description */}
+          <motion.p variants={item} className="text-gray-400 text-sm leading-relaxed max-w-[320px] mb-9">
+            Du matériel performant, un service réactif et des solutions
+            adaptées à tous vos projets.
+          </motion.p>
+
+          {/* CTA buttons */}
+          <motion.div variants={item} className="flex flex-wrap gap-3">
+            <a
+              href="#contact"
+              className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-ebg-yellow text-ebg-black text-[11px] font-black tracking-[0.18em] uppercase hover:bg-ebg-yellow-light transition-colors duration-200"
+            >
+              <PenLine size={14} strokeWidth={2.5} />
+              Demander un devis
+            </a>
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-ebg-dark border border-ebg-dark-3 text-white text-[11px] font-semibold tracking-[0.18em] uppercase hover:border-ebg-yellow/40 hover:text-ebg-yellow transition-all duration-200"
+            >
+              <WhatsAppIcon />
+              WhatsApp
+            </a>
+          </motion.div>
         </motion.div>
       </div>
     </section>
   );
 }
 
-function HeroCard() {
+function WhatsAppIcon() {
   return (
-    <div className="relative w-full aspect-[4/5]">
-      {/* Outer ghost frame */}
-      <div className="absolute inset-6 border border-white/[0.04]" />
-
-      {/* Floating accent box top-right */}
-      <div className="absolute top-0 right-0 w-14 h-14 bg-ebg-yellow" />
-
-      {/* Main card */}
-      <div className="absolute top-10 left-0 right-6 bottom-0 bg-ebg-dark border border-ebg-dark-3 overflow-hidden">
-        {/* Inner line grid */}
-        <div className="absolute inset-0 bg-line-grid" />
-
-        {/* Top yellow accent bar */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-ebg-yellow" />
-
-        {/* Watermark text */}
-        <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
-          <span className="font-bebas text-[11rem] leading-none text-white/[0.025] select-none tracking-widest">
-            EBG
-          </span>
-        </div>
-
-        {/* Content */}
-        <div className="relative p-7 flex flex-col h-full">
-          {/* Header info */}
-          <div className="mb-auto">
-            <p className="text-ebg-yellow text-[9px] tracking-[0.35em] uppercase font-semibold mb-1.5">
-              Guyane Française · Dep. 973
-            </p>
-            <p className="text-white text-sm font-medium tracking-wide">
-              Location · Terrassement · Transport
-            </p>
-          </div>
-
-          {/* Stats grid */}
-          <div className="grid grid-cols-2 gap-3 mt-8">
-            <div className="bg-ebg-black/60 border border-ebg-dark-3 p-4 hover:border-ebg-yellow/20 transition-colors">
-              <div className="font-bebas text-3xl text-ebg-yellow leading-none mb-1">100%</div>
-              <div className="text-gray-600 text-[9px] tracking-[0.22em] uppercase">Engagement</div>
-            </div>
-            <div className="bg-ebg-black/60 border border-ebg-dark-3 p-4 hover:border-white/10 transition-colors">
-              <div className="font-bebas text-3xl text-white leading-none mb-1">24/7</div>
-              <div className="text-gray-600 text-[9px] tracking-[0.22em] uppercase">Disponibilité</div>
-            </div>
-            <div className="col-span-2 bg-ebg-yellow/[0.07] border border-ebg-yellow/20 p-4">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-ebg-yellow" />
-                <span className="text-ebg-yellow text-[9px] tracking-[0.25em] uppercase font-bold">
-                  Location Mini-Pelles
-                </span>
-              </div>
-              <p className="text-gray-500 text-[10px] tracking-wide">
-                Disponible maintenant — Devis gratuit
-              </p>
-            </div>
-          </div>
-
-          {/* Bottom coordinates */}
-          <div className="mt-4 font-mono text-[9px] text-gray-700 tracking-wider">
-            <span>4°56&apos;N 52°19&apos;W &mdash; GUYANE 🇬🇫</span>
-          </div>
-        </div>
-
-        {/* Corner accents */}
-        <div className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-ebg-yellow" />
-        <div className="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-ebg-yellow/40" />
-      </div>
-
-      {/* Floating dots bottom-left */}
-      <div className="absolute bottom-4 left-1 grid grid-cols-4 gap-1.5">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <div
-            key={i}
-            className="w-1 h-1 rounded-full bg-ebg-yellow/20"
-          />
-        ))}
-      </div>
-    </div>
+    <svg viewBox="0 0 24 24" className="w-[15px] h-[15px] fill-current shrink-0">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
   );
 }

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { MessageCircle, Phone, ArrowRight } from "lucide-react";
 
-const WHATSAPP_NUMBER = "594694000000";
+const WHATSAPP_NUMBER = "594694136273";
 const WHATSAPP_MESSAGE =
   "Bonjour%20EBG%20GROUP,%20je%20souhaite%20un%20devis%20pour%20la%20location%20d%27une%20mini-pelle.";
 
@@ -91,12 +91,12 @@ export default function CTASection() {
               </a>
 
               <a
-                href="tel:+594694000000"
+                href="tel:+594694136273"
                 className="group flex items-center justify-between w-full px-7 py-5 border border-ebg-dark-3 text-white font-medium tracking-[0.15em] uppercase text-[11px] hover:border-ebg-yellow/40 hover:text-ebg-yellow transition-all duration-300"
               >
                 <div className="flex items-center gap-3">
                   <Phone size={18} />
-                  <span>+594 694 00 00 00</span>
+                  <span>+594 694 136 273</span>
                 </div>
                 <ArrowRight
                   size={16}
