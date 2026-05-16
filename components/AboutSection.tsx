@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MapPin, Shield, Zap, Users } from "lucide-react";
+import { EASE, EASE_OUT, VP, VP_TIGHT } from "@/lib/animations";
 
 const VALUES = [
   {
@@ -26,6 +27,13 @@ const VALUES = [
   },
 ];
 
+const HEADING_LINES = [
+  { text: "ANCRÉS EN GUYANE,", yellow: false },
+  { text: "TOURNÉS VERS", yellow: true },
+  { text: "L'AVENIR.", yellow: false },
+];
+
+
 export default function AboutSection() {
   return (
     <section id="about" className="py-32 bg-ebg-dark border-t border-ebg-dark-3 relative overflow-hidden">
@@ -41,35 +49,40 @@ export default function AboutSection() {
 
           {/* Left: Text content */}
           <div>
+            {/* Label */}
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={VP}
               transition={{ duration: 0.5 }}
               className="text-ebg-yellow text-[10px] tracking-[0.45em] uppercase font-semibold mb-5"
             >
               — À propos
             </motion.p>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-bebas text-[clamp(2.8rem,6vw,5rem)] leading-none tracking-wide text-white mb-10"
-            >
-              ANCRÉS EN GUYANE,
-              <br />
-              <span className="text-ebg-yellow">TOURNÉS VERS</span>
-              <br />
-              L&apos;AVENIR.
-            </motion.h2>
+            {/* Line-by-line heading reveal */}
+            <h2 className="font-bebas text-[clamp(2.8rem,6vw,5rem)] leading-none tracking-wide mb-10">
+              {HEADING_LINES.map((line, i) => (
+                <div key={i} className="overflow-hidden">
+                  <motion.div
+                    initial={{ y: "105%" }}
+                    whileInView={{ y: "0%" }}
+                    viewport={VP_TIGHT}
+                    transition={{ duration: 0.9, ease: EASE, delay: 0.1 + i * 0.1 }}
+                    className={line.yellow ? "text-ebg-yellow" : "text-white"}
+                  >
+                    {line.text}
+                  </motion.div>
+                </div>
+              ))}
+            </h2>
 
+            {/* Body text */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={VP}
+              transition={{ duration: 0.6, delay: 0.4 }}
               className="space-y-4 text-gray-400 text-[0.95rem] leading-[1.8] mb-12"
             >
               <p>
@@ -86,18 +99,19 @@ export default function AboutSection() {
               </p>
             </motion.div>
 
-            {/* Values */}
+            {/* Values cards */}
             <div className="grid grid-cols-2 gap-3">
               {VALUES.map((value, i) => (
                 <motion.div
                   key={value.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  whileHover={{ y: -3, borderColor: "rgba(244,180,0,0.25)" }}
+                  viewport={VP}
                   transition={{ delay: 0.3 + i * 0.09, duration: 0.5 }}
-                  className="group flex items-start gap-3 p-4 bg-ebg-black border border-ebg-dark-3 hover:border-ebg-yellow/25 transition-colors duration-300"
+                  className="group flex items-start gap-3 p-4 bg-ebg-black border border-ebg-dark-3 cursor-default"
                 >
-                  <div className="w-8 h-8 shrink-0 flex items-center justify-center bg-ebg-yellow/10 group-hover:bg-ebg-yellow/15 transition-colors">
+                  <div className="w-8 h-8 shrink-0 flex items-center justify-center bg-ebg-yellow/10 group-hover:bg-ebg-yellow/20 transition-colors duration-200">
                     <value.Icon size={15} className="text-ebg-yellow" />
                   </div>
                   <div>
@@ -117,8 +131,8 @@ export default function AboutSection() {
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
+            viewport={VP}
+            transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
           >
             <AboutCard />
           </motion.div>
@@ -133,8 +147,14 @@ function AboutCard() {
     <div className="relative">
       {/* Main card */}
       <div className="relative bg-ebg-black border border-ebg-dark-3 p-10 overflow-hidden">
-        {/* Yellow top accent */}
-        <div className="absolute top-0 left-0 w-20 h-[3px] bg-ebg-yellow" />
+        {/* Yellow top accent — animates in */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={VP}
+          transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
+          className="absolute top-0 left-0 w-20 h-[3px] bg-ebg-yellow origin-left"
+        />
 
         {/* Subtle bg grid */}
         <div className="absolute inset-0 bg-line-grid opacity-60" />
@@ -187,18 +207,20 @@ function AboutCard() {
           <div className="flex flex-wrap gap-2">
             {["Mini-pelles", "Terrassement", "Transport", "Maintenance"].map(
               (tag) => (
-                <span
+                <motion.span
                   key={tag}
-                  className="text-[9px] tracking-[0.18em] uppercase px-3 py-1.5 border border-ebg-dark-3 text-gray-600 hover:border-ebg-yellow/30 hover:text-gray-400 transition-colors cursor-default"
+                  whileHover={{ borderColor: "rgba(244,180,0,0.35)", color: "#9ca3af" }}
+                  transition={{ duration: 0.2 }}
+                  className="text-[9px] tracking-[0.18em] uppercase px-3 py-1.5 border border-ebg-dark-3 text-gray-600 cursor-default"
                 >
                   {tag}
-                </span>
+                </motion.span>
               )
             )}
           </div>
         </div>
 
-        {/* Corner accents */}
+        {/* Corner accent */}
         <div className="absolute bottom-0 right-0 w-7 h-7 border-b-2 border-r-2 border-ebg-yellow/30" />
       </div>
 

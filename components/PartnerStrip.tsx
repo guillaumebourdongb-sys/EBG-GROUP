@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CalendarCheck, Users, MapPin, Headphones } from "lucide-react";
+import { EASE, VP } from "@/lib/animations";
 
 const STATS = [
   { Icon: CalendarCheck, value: "100%", label: "Disponible" },
@@ -15,14 +16,13 @@ export default function PartnerStrip() {
     <section className="flex flex-col lg:flex-row min-h-[160px]">
       {/* Yellow left block with diagonal cut */}
       <motion.div
-        initial={{ opacity: 0, x: -30 }}
+        initial={{ opacity: 0, x: -40 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
+        viewport={VP}
+        transition={{ duration: 0.75, ease: EASE }}
         className="relative bg-ebg-yellow flex items-center px-10 xl:px-16 py-10 lg:py-0 shrink-0 lg:w-auto"
         style={{ clipPath: "polygon(0 0, 100% 0, 92% 100%, 0 100%)" }}
       >
-        {/* Padding right to compensate for clip */}
         <div className="pr-12">
           <h2
             className="font-bebas text-ebg-black leading-tight tracking-wide"
@@ -43,21 +43,35 @@ export default function PartnerStrip() {
           {STATS.map((stat, i) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15 + i * 0.08, duration: 0.5 }}
-              className="flex items-center gap-3"
+              viewport={VP}
+              transition={{ delay: 0.2 + i * 0.09, duration: 0.55, ease: EASE }}
+              className="flex items-center gap-3 group cursor-default"
             >
-              <stat.Icon
-                size={28}
-                className="text-ebg-yellow shrink-0"
-                strokeWidth={1.5}
-              />
+              <motion.div
+                initial={{ rotate: -15, opacity: 0 }}
+                whileInView={{ rotate: 0, opacity: 1 }}
+                viewport={VP}
+                transition={{ delay: 0.3 + i * 0.09, duration: 0.6, ease: EASE }}
+                whileHover={{ rotate: -8, scale: 1.1 }}
+              >
+                <stat.Icon
+                  size={28}
+                  className="text-ebg-yellow shrink-0"
+                  strokeWidth={1.5}
+                />
+              </motion.div>
               <div>
-                <div className="font-bebas text-2xl xl:text-3xl text-white leading-none">
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={VP}
+                  transition={{ delay: 0.35 + i * 0.09, duration: 0.5 }}
+                  className="font-bebas text-2xl xl:text-3xl text-white leading-none group-hover:text-ebg-yellow transition-colors duration-300"
+                >
                   {stat.value}
-                </div>
+                </motion.div>
                 <div className="text-gray-500 text-[9px] tracking-[0.22em] uppercase mt-0.5">
                   {stat.label}
                 </div>
