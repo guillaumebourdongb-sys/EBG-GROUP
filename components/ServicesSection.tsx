@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { EASE, EASE_OUT, VP } from "@/lib/animations";
 
+const VP_CARD = { once: true, margin: "-30px" } as const;
+
 const SERVICES = [
   {
     title: "Location de matériel",
@@ -124,7 +126,7 @@ function ServiceCard({
       initial="hidden"
       whileInView="visible"
       whileHover="hovered"
-      viewport={{ once: true, margin: "-30px" }}
+      viewport={VP_CARD}
       transition={{ delay: index * 0.08, duration: 0.6, ease: EASE }}
       className="group relative block overflow-hidden cursor-pointer"
       style={{ minHeight: "380px" }}
