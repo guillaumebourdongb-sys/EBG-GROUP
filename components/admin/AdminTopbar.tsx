@@ -1,8 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Menu, Bell } from "lucide-react";
+import { Menu, Bell, LogOut } from "lucide-react";
 
 const TITLES: Record<string, string> = {
   "/admin":                  "Dashboard",
@@ -20,7 +20,14 @@ interface AdminTopbarProps {
 
 export default function AdminTopbar({ onMenuToggle }: AdminTopbarProps) {
   const pathname = usePathname();
-  const title = TITLES[pathname] ?? "Admin";
+  const router   = useRouter();
+  const title    = TITLES[pathname] ?? "Admin";
+
+  async function logout() {
+    await fetch("/api/admin/logout", { method: "POST" });
+    router.push("/admin/login");
+    router.refresh();
+  }
 
   return (
     <header className="fixed top-0 right-0 left-0 lg:left-[240px] h-16 bg-ebg-dark border-b border-ebg-dark-3 z-30 flex items-center px-4 sm:px-6 gap-4">
@@ -47,8 +54,15 @@ export default function AdminTopbar({ onMenuToggle }: AdminTopbarProps) {
           <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-ebg-yellow rounded-full" />
         </button>
         <div className="w-8 h-8 bg-ebg-yellow/15 flex items-center justify-center">
-          <span className="text-ebg-yellow text-xs font-bold">JD</span>
+          <span className="text-ebg-yellow text-xs font-bold">GB</span>
         </div>
+        <button
+          onClick={logout}
+          title="Se déconnecter"
+          className="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-red-400 transition-colors"
+        >
+          <LogOut size={15} />
+        </button>
       </div>
     </header>
   );
