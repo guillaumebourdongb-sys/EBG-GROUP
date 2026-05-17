@@ -18,8 +18,8 @@ const STATUS_TABS: { label: string; value: MachineStatus | "all" }[] = [
 ];
 
 const EMPTY_MACHINE: Omit<Machine, "id"> = {
-  name: "", category: "", year: new Date().getFullYear(), status: "available",
-  dailyRate: 0, totalHours: 0, lastMaintenance: "", nextMaintenance: "", image: "",
+  name: "", type: "", brand: "", model: "", year: new Date().getFullYear(), status: "available",
+  dailyRate: 0, weeklyRate: 0, hoursUsed: 0, lastMaintenance: "", nextMaintenance: "",
 };
 
 export default function MaterielPage() {
@@ -33,16 +33,16 @@ export default function MaterielPage() {
   const filtered = machines.filter((m) => {
     const matchTab = tab === "all" || m.status === tab;
     const matchSearch = m.name.toLowerCase().includes(search.toLowerCase()) ||
-      m.category.toLowerCase().includes(search.toLowerCase());
+      m.type.toLowerCase().includes(search.toLowerCase());
     return matchTab && matchSearch;
   });
 
   function openCreate() { setEditing(null); setForm(EMPTY_MACHINE); setModalOpen(true); }
   function openEdit(m: Machine) {
     setEditing(m);
-    setForm({ name: m.name, category: m.category, year: m.year, status: m.status,
-      dailyRate: m.dailyRate, totalHours: m.totalHours, lastMaintenance: m.lastMaintenance,
-      nextMaintenance: m.nextMaintenance, image: m.image ?? "" });
+    setForm({ name: m.name, type: m.type, brand: m.brand, model: m.model, year: m.year, status: m.status,
+      dailyRate: m.dailyRate, weeklyRate: m.weeklyRate, hoursUsed: m.hoursUsed,
+      lastMaintenance: m.lastMaintenance, nextMaintenance: m.nextMaintenance });
     setModalOpen(true);
   }
 
@@ -118,7 +118,7 @@ export default function MaterielPage() {
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div>
                   <p className="text-white text-[14px] font-medium leading-snug">{m.name}</p>
-                  <p className="text-gray-600 text-[11px] mt-0.5">{m.category} · {m.year}</p>
+                  <p className="text-gray-600 text-[11px] mt-0.5">{m.brand} {m.model} · {m.year}</p>
                 </div>
                 <StatusBadge status={m.status} />
               </div>
@@ -129,7 +129,7 @@ export default function MaterielPage() {
                 </div>
                 <div className="bg-black/30 px-3 py-2">
                   <p className="text-[9px] text-gray-600 tracking-wider uppercase">Heures</p>
-                  <p className="text-white font-bebas text-lg leading-none">{m.totalHours.toLocaleString("fr-FR")}</p>
+                  <p className="text-white font-bebas text-lg leading-none">{m.hoursUsed.toLocaleString("fr-FR")}</p>
                 </div>
               </div>
               <div className="mt-3 pt-3 border-t border-white/5">
@@ -152,11 +152,14 @@ export default function MaterielPage() {
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title={editing ? "Modifier la machine" : "Ajouter une machine"} maxWidth="max-w-2xl">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {([
-            { key: "name",     label: "Nom de la machine",    type: "text"   },
-            { key: "category", label: "Catégorie",            type: "text"   },
-            { key: "year",     label: "Année",                type: "number" },
-            { key: "dailyRate",label: "Tarif journalier (€)", type: "number" },
-            { key: "totalHours",label:"Heures totales",       type: "number" },
+            { key: "name",      label: "Nom de la machine",    type: "text"   },
+            { key: "type",      label: "Type",                 type: "text"   },
+            { key: "brand",     label: "Marque",               type: "text"   },
+            { key: "model",     label: "Modèle",               type: "text"   },
+            { key: "year",      label: "Année",                type: "number" },
+            { key: "dailyRate", label: "Tarif journalier (€)", type: "number" },
+            { key: "weeklyRate",label: "Tarif hebdo (€)",      type: "number" },
+            { key: "hoursUsed", label: "Heures utilisées",     type: "number" },
           ] as { key: keyof Omit<Machine,"id">; label: string; type: string }[]).map(({ key, label, type }) => (
             <div key={key}>
               <label className="block text-[10px] text-gray-500 tracking-[0.15em] uppercase mb-1.5">{label}</label>

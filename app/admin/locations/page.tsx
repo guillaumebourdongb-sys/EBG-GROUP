@@ -20,7 +20,7 @@ const STATUS_TABS: { label: string; value: LocationStatus | "all" }[] = [
 
 const EMPTY: Omit<RentalLocation, "id"> = {
   clientId: "", clientName: "", machineId: "", machineName: "",
-  startDate: "", endDate: "", status: "reserved", dailyRate: 0, totalAmount: 0, notes: "",
+  startDate: "", endDate: "", status: "reserved", dailyRate: 0, totalAmount: 0, deposit: 0, createdAt: "", notes: "",
 };
 
 export default function LocationsPage() {
@@ -49,7 +49,8 @@ export default function LocationsPage() {
     setEditing(loc);
     setForm({ clientId: loc.clientId, clientName: loc.clientName, machineId: loc.machineId,
       machineName: loc.machineName, startDate: loc.startDate, endDate: loc.endDate,
-      status: loc.status, dailyRate: loc.dailyRate, totalAmount: loc.totalAmount, notes: loc.notes ?? "" });
+      status: loc.status, dailyRate: loc.dailyRate, totalAmount: loc.totalAmount,
+      deposit: loc.deposit, createdAt: loc.createdAt, notes: loc.notes ?? "" });
     setModalOpen(true);
   }
 

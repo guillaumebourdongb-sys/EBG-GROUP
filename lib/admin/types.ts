@@ -30,6 +30,10 @@ export interface Machine {
   nextMaintenance: string;
   hoursUsed: number;
   notes?: string;
+  image?: string;
+  // convenience aliases used by UI
+  category?: string;
+  totalHours?: number;
 }
 
 export interface RentalLocation {
@@ -43,29 +47,34 @@ export interface RentalLocation {
   status: LocationStatus;
   totalAmount: number;
   deposit: number;
-  notes?: string;
+  dailyRate?: number;
   createdAt: string;
+  notes?: string;
 }
 
 export interface DevisItem {
   description: string;
   quantity: number;
   unitPrice: number;
+  total?: number;
 }
 
 export interface Devis {
   id: string;
-  reference: string;
+  reference?: string;
   clientId: string;
   clientName: string;
-  clientEmail: string;
-  clientPhone: string;
+  clientEmail?: string;
+  clientPhone?: string;
   items: DevisItem[];
-  totalAmount: number;
+  totalAmount?: number;
+  totalHT?: number;
+  tva?: number;
+  totalTTC?: number;
   status: DevisStatus;
   validUntil: string;
-  notes?: string;
   createdAt: string;
+  notes?: string;
 }
 
 export interface Transaction {
@@ -82,8 +91,9 @@ export interface AdminUser {
   name: string;
   email: string;
   role: UserRole;
+  active?: boolean;
   createdAt: string;
-  lastLogin: string;
+  lastLogin?: string;
 }
 
 export interface MonthlyData {

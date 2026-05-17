@@ -63,7 +63,7 @@ export default function DevisPage() {
   }
 
   function createDevis() {
-    const total = newForm.items.reduce((s, it) => s + it.total, 0);
+    const total = newForm.items.reduce((s, it) => s + (it.total ?? it.quantity * it.unitPrice), 0);
     const d: Devis = {
       id: `DEV-${Date.now()}`,
       clientId: newForm.clientId, clientName: newForm.clientName,
@@ -143,7 +143,7 @@ export default function DevisPage() {
                   <td className="px-5 py-3.5 text-[11px] text-gray-500">{d.createdAt}</td>
                   <td className="px-5 py-3.5 text-[11px] text-gray-500">{d.validUntil}</td>
                   <td className="px-5 py-3.5 text-[13px] text-ebg-yellow font-medium">
-                    {d.totalTTC.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+                    {(d.totalTTC ?? (d.totalAmount ?? 0) * 1.085).toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
                   </td>
                   <td className="px-5 py-3.5"><StatusBadge status={d.status} /></td>
                   <td className="px-5 py-3.5">
@@ -182,7 +182,7 @@ export default function DevisPage() {
                 <p className="text-gray-400 text-sm">{viewDevis.createdAt}</p>
               </div>
               <div>
-                <p className="text-[10px] text-gray-600 tracking-wider uppercase mb-1">Valide jusqu'au</p>
+                <p className="text-[10px] text-gray-600 tracking-wider uppercase mb-1">Valide jusqu&apos;au</p>
                 <p className="text-gray-400 text-sm">{viewDevis.validUntil}</p>
               </div>
             </div>
@@ -201,16 +201,23 @@ export default function DevisPage() {
                       <td className="px-4 py-2.5 text-[12px] text-white">{item.description}</td>
                       <td className="px-4 py-2.5 text-[12px] text-gray-400">{item.quantity}</td>
                       <td className="px-4 py-2.5 text-[12px] text-gray-400">{item.unitPrice.toLocaleString("fr-FR")} €</td>
-                      <td className="px-4 py-2.5 text-[12px] text-ebg-yellow">{item.total.toLocaleString("fr-FR")} €</td>
+                      <td className="px-4 py-2.5 text-[12px] text-ebg-yellow">{(item.total ?? item.quantity * item.unitPrice).toLocaleString("fr-FR")} €</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
             <div className="flex flex-col items-end gap-1 text-sm mb-4">
-              <p className="text-gray-500">Sous-total HT: <span className="text-white">{viewDevis.totalHT.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €</span></p>
-              <p className="text-gray-500">TVA (8.5%): <span className="text-white">{viewDevis.tva.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €</span></p>
-              <p className="text-ebg-yellow font-bold text-base">Total TTC: {viewDevis.totalTTC.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €</p>
+              {(() => {
+                const ht  = viewDevis.totalHT  ?? viewDevis.totalAmount ?? 0;
+                const tva = viewDevis.tva       ?? ht * 0.085;
+                const ttc = viewDevis.totalTTC  ?? ht * 1.085;
+                return <>
+                  <p className="text-gray-500">Sous-total HT: <span className="text-white">{ht.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €</span></p>
+                  <p className="text-gray-500">TVA (8.5%): <span className="text-white">{tva.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €</span></p>
+                  <p className="text-ebg-yellow font-bold text-base">Total TTC: {ttc.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €</p>
+                </>;
+              })()}
             </div>
             {viewDevis.status === "pending" && (
               <div className="flex justify-end gap-3">
@@ -242,7 +249,7 @@ export default function DevisPage() {
             </select>
           </div>
           <div>
-            <label className="block text-[10px] text-gray-500 tracking-[0.15em] uppercase mb-1.5">Valide jusqu'au</label>
+            <label className="block text-[10px] text-gray-500 tracking-[0.15em] uppercase mb-1.5">Valide jusqu&apos;au</label>
             <input type="date" value={newForm.validUntil} onChange={(e) => setNewForm((f) => ({ ...f, validUntil: e.target.value }))}
               className="w-full bg-[#111] border border-ebg-dark-3 text-white text-[13px] px-3 py-2.5 outline-none focus:border-ebg-yellow/40" />
           </div>
